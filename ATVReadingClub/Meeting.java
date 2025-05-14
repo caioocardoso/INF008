@@ -1,3 +1,3 @@
-Class Meeting {
+class Meeting {
     
 }
