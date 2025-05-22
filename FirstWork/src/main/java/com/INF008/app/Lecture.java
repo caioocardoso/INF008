@@ -1,5 +1,5 @@
-package FirstWork.src.main.java.com.mycompany.app;
+package FirstWork.src.main.java.com.INF008.app;
 
-public class Lecture {
+public class Lecture extends Event{
 
 }

@@ -1,5 +1,5 @@
 package FirstWork.src.main.java.com.INF008.app;
 
-public class Course {
+public class Course extends Event{
 
 }
