@@ -1,1 +1,7 @@
-com/mycompany/app/App.class
+FirstWork/src/main/java/com/mycompany/app/Workshop.class
+FirstWork/src/main/java/com/mycompany/app/Course.class
+FirstWork/src/main/java/com/mycompany/app/Lecture.class
+FirstWork/src/main/java/com/mycompany/app/AcademicFair.class
+FirstWork/src/main/java/com/mycompany/app/Event.class
+com/INF008/app/App.class
+FirstWork/src/main/java/com/mycompany/app/Participant.class
