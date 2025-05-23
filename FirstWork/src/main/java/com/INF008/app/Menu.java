@@ -2,26 +2,31 @@ package com.INF008.app;
 
 import java.util.Scanner;
 
+import com.INF008.app.utils.ConsoleColors;
+import com.INF008.app.utils.Utils;
+
 public class Menu {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void showMainMenu(){
+    public static void showMainMenu() {
         int option;
-        do{
-            System.out.println("\33[H\33[2J");
-            System.err.println("-------------------------------------------------------------------------------");
-            System.err.println("\t\t\tACADEMIC EVENT MANAGEMENT SYSTEM");
-            System.err.println("-------------------------------------------------------------------------------");
-            System.err.println("\t1. Register Event.");
-            System.err.println("\t2. Register participant.");
-            System.err.println("\t3. Register participant for the event.");
-            System.err.println("\t4. ");
-            System.err.println("\t5. ");
-            System.err.println("\t6. ");
-            System.err.println("\t0. Leave");
-            System.err.println("-------------------------------------------------------------------------------");
-            System.err.print("Choose an option: ");
-        
+        do {
+            Utils.cleanScreen();
+            System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
+            System.out
+                    .println("║\t\t\t" + ConsoleColors.INFO + "ACADEMIC EVENT MANAGEMENT SYSTEM" + ConsoleColors.RESET);
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
+            System.out.println("║\t" + ConsoleColors.INFO + "1. Register Event." + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "2. Register participant." + ConsoleColors.RESET);
+            System.out.println(
+                    "║\t" + ConsoleColors.INFO + "3. Register participant for the event." + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "4. " + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "5. " + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "6. " + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
+            System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
+            System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
+
             option = scanner.nextInt();
             scanner.nextLine();
 
@@ -30,48 +35,81 @@ public class Menu {
                     registerEvent();
                     break;
                 case 2:
-                    
+
                     break;
                 case 3:
-                    
+
                     break;
                 case 4:
-                    
+
                     break;
                 case 5:
-                    
+
                     break;
                 case 6:
-                    
+
                     break;
                 case 0:
-                    System.out.println("\nLeaving the system...");
-                    break;            
+                    Utils.cleanScreen();
+                    System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
+                    System.out.println("║\t\t\t" + ConsoleColors.WARNING + "Leaving the system..." + ConsoleColors.RESET);
+                    System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
+                    break;
                 default:
-                    System.out.println("\nInvalid option, please try again.");
+                    Utils.cleanScreen();
+                    System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
+                    System.out.println("║\t\t\t" + ConsoleColors.WARNING + "Invalid option, please try again." + ConsoleColors.RESET);
+                    System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                    }
             }
-        }while(option != 0);
+        } while (option != 0);
     }
 
-    public static void registerEvent(){
-        System.out.println("\33[H\33[2J");
-        System.err.println("-------------------------------------------------------------------------------");
-        System.err.println("\t\t\tREGISTER EVENT");
-        System.err.println("-------------------------------------------------------------------------------");
-        System.err.println("\t1. Lecture.");
-        System.err.println("\t2. Workshop.");
-        System.err.println("\t3. Short course.");
-        System.err.println("\t4. Academic fair.");
-        System.err.println("\t0. Leave");
-        System.err.println("-------------------------------------------------------------------------------");
-        System.err.print("Escolha uma opção acima: ");
+    public static void registerEvent() {
+        Utils.cleanScreen();
+        System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
+        System.out.println("║\t\t\t" + ConsoleColors.INFO + "REGISTER EVENT" + ConsoleColors.RESET);
+        System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
+        System.out.println("║\t" + ConsoleColors.INFO + "1. Lecture." + ConsoleColors.RESET);
+        System.out.println("║\t" + ConsoleColors.INFO + "2. Workshop." + ConsoleColors.RESET);
+        System.out.println("║\t" + ConsoleColors.INFO + "3. Short course." + ConsoleColors.RESET);
+        System.out.println("║\t" + ConsoleColors.INFO + "4. Academic fair" + ConsoleColors.RESET);
+        System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
+        System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
+        System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
 
         int type;
         type = scanner.nextInt();
         scanner.nextLine();
+        if (type == 0)
+            return;
 
+        System.out.print("Title: ");
+        String title = scanner.nextLine();
 
-        if(type == 0) return;
+        System.out.print("Date: ");
+        String date = scanner.nextLine();
 
+        System.out.print("Local: ");
+        String local = scanner.nextLine();
+
+        System.out.print("Capacity: ");
+        int capacity = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Description: ");
+        String description = scanner.nextLine();
+
+        Utils.cleanScreen();
+        System.out.println("-------------------------------------------------------------------------------");
+        System.out.println("\t\t\tEVENT REGISTER SUCCESSFULL");
+        System.out.println("-------------------------------------------------------------------------------");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+        }
     }
 }
