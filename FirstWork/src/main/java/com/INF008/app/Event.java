@@ -1,4 +1,4 @@
-package FirstWork.src.main.java.com.INF008.app;
+package com.INF008.app;
 
 public class Event {
     private String title;
