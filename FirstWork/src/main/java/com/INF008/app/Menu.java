@@ -1,11 +1,15 @@
 package com.INF008.app;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.INF008.app.utils.ConsoleColors;
 import com.INF008.app.utils.Utils;
 
 public class Menu {
+    private static List<Event> events = new ArrayList<>();
+
     private static Scanner scanner = new Scanner(System.in);
 
     public static void showMainMenu() {
@@ -121,6 +125,7 @@ public class Menu {
                     Event newEvent = new Event();
                     newEvent.setEvent(title, date, local, capacity, description);
                     System.out.println(newEvent.getTitle());
+                    events.add(newEvent);
                     eventRegisteredSuccessfull();
                     break;
                 case 2:
