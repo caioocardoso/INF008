@@ -75,7 +75,13 @@ public class Menu {
     }
 
     public static void registerEvent() {
-        int type;
+        int type = 0;
+        String title = "";
+        String date = "";
+        String local = "";
+        int capacity = 0;
+        String description = "";
+
         do {
             Utils.cleanScreen();
             System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
@@ -94,24 +100,27 @@ public class Menu {
 
             if (type >= 1 && type <= 4) {
                 System.out.print(ConsoleColors.INPUT + "Title: " + ConsoleColors.RESET);
-                String title = scanner.nextLine();
+                title = scanner.nextLine();
 
                 System.out.print(ConsoleColors.INPUT + "Date: " + ConsoleColors.RESET);
-                String date = scanner.nextLine();
+                date = scanner.nextLine();
 
                 System.out.print(ConsoleColors.INPUT + "Local: " + ConsoleColors.RESET);
-                String local = scanner.nextLine();
+                local = scanner.nextLine();
 
                 System.out.print(ConsoleColors.INPUT + "Capacity: " + ConsoleColors.RESET);
-                int capacity = scanner.nextInt();
+                capacity = scanner.nextInt();
                 scanner.nextLine();
 
                 System.out.print(ConsoleColors.INPUT + "Description: " + ConsoleColors.RESET);
-                String description = scanner.nextLine();
+                description = scanner.nextLine();
             }
 
             switch (type) {
                 case 1:
+                    Event newEvent = new Event();
+                    newEvent.setEvent(title, date, local, capacity, description);
+                    System.out.println(newEvent.getTitle());
                     eventRegisteredSuccessfull();
                     break;
                 case 2:

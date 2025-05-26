@@ -7,6 +7,14 @@ public class Event {
     private int capacity;
     private String description;
 
+    public void setEvent(String title, String date, String local, int capacity, String description) {
+        this.title = title;
+        this.date = date;
+        this.local = local;
+        this.capacity = capacity;
+        this.description = description;
+    }
+
     public String getTitle() {
         return title;
     }
