@@ -8,8 +8,6 @@ import com.INF008.app.utils.ConsoleColors;
 import com.INF008.app.utils.Utils;
 
 public class Menu {
-    private static List<Event> events = new ArrayList<>();
-
     private static Scanner scanner = new Scanner(System.in);
 
     public static void showMainMenu() {
@@ -122,10 +120,8 @@ public class Menu {
 
             switch (type) {
                 case 1:
-                    Event newEvent = new Event();
-                    newEvent.setEvent(title, date, local, capacity, description);
-                    System.out.println(newEvent.getTitle());
-                    events.add(newEvent);
+                    Event newEvent = new Event(title, date, local, capacity, description);
+                    Event.events.add(newEvent);
                     eventRegisteredSuccessfull();
                     break;
                 case 2:
