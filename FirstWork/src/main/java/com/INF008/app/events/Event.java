@@ -1,18 +1,18 @@
-package com.INF008.app;
+package com.INF008.app.events;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class Event implements iEvent {
-    private int id;
+import com.INF008.app.participants.Participant;
+
+public class Event {
     private String title;
     private String date;
     private String local;
     private int capacity;
     private String description;
-    private static int counter = 0;
-    private static HashMap<Integer, Event> events = new LinkedHashMap<>();
+    // private HashMap<String, Participant> participantsOfEvent = new LinkedHashMap<>();
 
     public Event(String title, String date, String local, int capacity, String description) {
         this.title = title;
@@ -20,5 +20,9 @@ public class Event implements iEvent {
         this.local = local;
         this.capacity = capacity;
         this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

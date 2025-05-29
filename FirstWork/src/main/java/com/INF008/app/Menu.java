@@ -1,9 +1,9 @@
 package com.INF008.app;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
+import com.INF008.app.services.EventManager;
+import com.INF008.app.services.ParticipantManager;
 import com.INF008.app.utils.ConsoleColors;
 import com.INF008.app.utils.Utils;
 
@@ -20,8 +20,7 @@ public class Menu {
             System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
             System.out.println("║\t" + ConsoleColors.INFO + "1. Register Event." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "2. Register participant." + ConsoleColors.RESET);
-            System.out.println(
-                    "║\t" + ConsoleColors.INFO + "3. Register participant for the event." + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "3. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "4. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "5. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "6. " + ConsoleColors.RESET);
@@ -37,7 +36,7 @@ public class Menu {
                     registerEvent();
                     break;
                 case 2:
-
+                    registerParticipant();
                     break;
                 case 3:
 
@@ -120,18 +119,17 @@ public class Menu {
 
             switch (type) {
                 case 1:
-                    Event newEvent = new Event(title, date, local, capacity, description);
-                    Event.events.add(newEvent);
-                    eventRegisteredSuccessfull();
+                    EventManager.createLecture(title, date, local, capacity, description);
+                    successfull("REGISTERING THE LECTURE");
                     break;
                 case 2:
-                    eventRegisteredSuccessfull();
+                    successfull("REGISTERING THE EVENT");
                     break;
                 case 3:
-                    eventRegisteredSuccessfull();
+                    successfull("REGISTERING THE EVENT");
                     break;
                 case 4:
-                    eventRegisteredSuccessfull();
+                    successfull("REGISTERING THE EVENT");
                     break;
                 case 0:
                     return;
@@ -152,10 +150,72 @@ public class Menu {
         } while (type != 0);
     }
 
-    public static void eventRegisteredSuccessfull() {
+    public static void registerParticipant(){
+        int option = 0;
+        String cpf = "";
+        String name = "";
+
+        do {
+            Utils.cleanScreen();
+            System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
+            System.out.println("║\t\t\t" + ConsoleColors.INFO + "REGISTER PARTICIPANT" + ConsoleColors.RESET);
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
+            System.out.println("║\t" + ConsoleColors.INFO + "1. Register participant." + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "2. Register participant in an event." + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "3. " + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "4. " + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
+            System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
+            System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
+
+            option = scanner.nextInt();
+            scanner.nextLine();
+
+            if (option == 1) {
+                System.out.print(ConsoleColors.INPUT + "Cpf: " + ConsoleColors.RESET);
+                cpf = scanner.nextLine();
+
+                System.out.print(ConsoleColors.INPUT + "Name: " + ConsoleColors.RESET);
+                name = scanner.nextLine();
+            }
+
+            switch (option) {
+                case 1:
+                    ParticipantManager.registerParticipant(cpf, name);
+                    successfull("REGISTERING THE PARTICIPANT");
+                    break;
+                case 2:
+                    successfull("REGISTERING THE PARTICIPANT IN AN EVENT");
+                    break;
+                case 3:
+                    successfull("");
+                    break;
+                case 4:
+                    successfull("");
+                    break;
+                case 0:
+                    return;
+                default:
+                    Utils.cleanScreen();
+                    System.out
+                            .println("╔══════════════════════════════════════════════════════════════════════════════");
+                    System.out.println("║\t\t\t" + ConsoleColors.WARNING + "Invalid option, please try again."
+                            + ConsoleColors.RESET);
+                    System.out
+                            .println("╠══════════════════════════════════════════════════════════════════════════════");
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                    }
+                    break;
+            }
+        } while (option != 0);
+    }
+
+    public static void successfull(String text) {
         Utils.cleanScreen();
         System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
-        System.out.println("║\t\t\t" + ConsoleColors.INFO + "EVENT REGISTER SUCCESSFULL" + ConsoleColors.RESET);
+        System.out.println("║\t\t\t" + ConsoleColors.INFO + "SUCCESS IN " + text  + ConsoleColors.RESET);
         System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
 
         try {
