@@ -1,8 +1,10 @@
 package com.INF008.app.events;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.TreeSet;
 
 import com.INF008.app.participants.Participant;
 
@@ -12,7 +14,15 @@ public class Event {
     private String local;
     private int capacity;
     private String description;
-    // private HashMap<String, Participant> participantsOfEvent = new LinkedHashMap<>();
+
+    Comparator<Participant> comparatorByName = new Comparator<Participant>() {
+        @Override
+        public int compare(Participant p1, Participant p2) {
+            return p1.getName().compareTo(p2.getName());
+        }
+    };
+
+    TreeSet<Participant> participantsOfEvent = new TreeSet<>(comparatorByName);
 
     public Event(String title, String date, String local, int capacity, String description) {
         this.title = title;
@@ -22,7 +32,14 @@ public class Event {
         this.description = description;
     }
 
+    public void registerParticipantToEvent(Participant participant){
+        participantsOfEvent.add(participant);
+        System.out.println(participantsOfEvent.contains(participant));
+    }
+
     public String getTitle() {
         return title;
     }
+    
+   
 }

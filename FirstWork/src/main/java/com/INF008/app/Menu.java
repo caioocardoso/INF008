@@ -2,6 +2,7 @@ package com.INF008.app;
 
 import java.util.Scanner;
 
+import com.INF008.app.events.Event;
 import com.INF008.app.services.EventManager;
 import com.INF008.app.services.ParticipantManager;
 import com.INF008.app.utils.ConsoleColors;
@@ -15,8 +16,7 @@ public class Menu {
         do {
             Utils.cleanScreen();
             System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
-            System.out
-                    .println("║\t\t\t" + ConsoleColors.INFO + "ACADEMIC EVENT MANAGEMENT SYSTEM" + ConsoleColors.RESET);
+            System.out.println("║\t\t\t" + ConsoleColors.INFO + "ACADEMIC EVENT MANAGEMENT SYSTEM" + ConsoleColors.RESET);
             System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
             System.out.println("║\t" + ConsoleColors.INFO + "1. Register Event." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "2. Register participant." + ConsoleColors.RESET);
@@ -185,6 +185,7 @@ public class Menu {
                     successfull("REGISTERING THE PARTICIPANT");
                     break;
                 case 2:
+                    EventManager.registerParticipantToEvent(0, "0");
                     successfull("REGISTERING THE PARTICIPANT IN AN EVENT");
                     break;
                 case 3:
@@ -216,6 +217,18 @@ public class Menu {
         Utils.cleanScreen();
         System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
         System.out.println("║\t\t\t" + ConsoleColors.INFO + "SUCCESS IN " + text  + ConsoleColors.RESET);
+        System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+        }
+    }
+
+    public static void error(String text) {
+        Utils.cleanScreen();
+        System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
+        System.out.println("║\t\t\t" + ConsoleColors.INFO + "ERROR IN " + text  + ConsoleColors.RESET);
         System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
 
         try {
