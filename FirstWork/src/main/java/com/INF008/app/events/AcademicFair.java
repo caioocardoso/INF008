@@ -1,5 +1,5 @@
-package com.INF008.app.events;
+// package com.INF008.app.events;
 
-public class AcademicFair extends Event{
+// public class AcademicFair extends Event{
 
-}
+// }
