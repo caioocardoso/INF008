@@ -14,13 +14,13 @@ public class Menu {
     public static void showMainMenu() {
         int option;
         do {
-            Utils.cleanScreen();
             System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
-            System.out.println("║\t\t\t" + ConsoleColors.INFO + "ACADEMIC EVENT MANAGEMENT SYSTEM" + ConsoleColors.RESET);
+            System.out
+                    .println("║\t\t\t" + ConsoleColors.INFO + "ACADEMIC EVENT MANAGEMENT SYSTEM" + ConsoleColors.RESET);
             System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
             System.out.println("║\t" + ConsoleColors.INFO + "1. Register Event." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "2. Register participant." + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "3. " + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "3. Event report" + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "4. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "5. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "6. " + ConsoleColors.RESET);
@@ -39,7 +39,7 @@ public class Menu {
                     registerParticipant();
                     break;
                 case 3:
-
+                    eventReport();
                     break;
                 case 4:
 
@@ -59,18 +59,47 @@ public class Menu {
                     System.out
                             .println("╠══════════════════════════════════════════════════════════════════════════════");
                     break;
-                default:
-                    Utils.cleanScreen();
-                    System.out
-                            .println("╔══════════════════════════════════════════════════════════════════════════════");
-                    System.out.println("║\t\t\t" + ConsoleColors.WARNING + "Invalid option, please try again."
-                            + ConsoleColors.RESET);
-                    System.out
-                            .println("╠══════════════════════════════════════════════════════════════════════════════");
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                    }
+                default: Menu.invalidOption(); break;
+            }
+        } while (option != 0);
+    }
+
+    private static void eventReport() {
+        int option;
+        int keyEvent = -1;
+        do {
+            Utils.cleanScreen();
+            System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
+            System.out
+                    .println("║\t\t\t" + ConsoleColors.INFO + "EVENT REPORT" + ConsoleColors.RESET);
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
+            System.out.println("║\t" + ConsoleColors.INFO + "1. Specific report." + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "2. Report by type." + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "3. Report by date." + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
+            System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
+            System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
+
+            option = scanner.nextInt();
+            scanner.nextLine();
+
+            if (option == 1) {
+                System.out.print(ConsoleColors.INPUT + "Event Key: " + ConsoleColors.RESET);
+                keyEvent = scanner.nextInt();
+                scanner.nextLine();
+            }
+
+            switch (option) {
+                case 1:
+                    EventManager.eventReport(keyEvent);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 0:
+                    return;
+                default: Menu.invalidOption(); break;
             }
         } while (option != 0);
     }
@@ -133,27 +162,16 @@ public class Menu {
                     break;
                 case 0:
                     return;
-                default:
-                    Utils.cleanScreen();
-                    System.out
-                            .println("╔══════════════════════════════════════════════════════════════════════════════");
-                    System.out.println("║\t\t\t" + ConsoleColors.WARNING + "Invalid option, please try again."
-                            + ConsoleColors.RESET);
-                    System.out
-                            .println("╠══════════════════════════════════════════════════════════════════════════════");
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                    }
-                    break;
+                default: Menu.invalidOption(); break;
             }
         } while (type != 0);
     }
 
-    public static void registerParticipant(){
+    public static void registerParticipant() {
         int option = 0;
         String cpf = "";
         String name = "";
+        int keyEvent = -1;
 
         do {
             Utils.cleanScreen();
@@ -161,7 +179,8 @@ public class Menu {
             System.out.println("║\t\t\t" + ConsoleColors.INFO + "REGISTER PARTICIPANT" + ConsoleColors.RESET);
             System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
             System.out.println("║\t" + ConsoleColors.INFO + "1. Register participant." + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "2. Register participant in an event." + ConsoleColors.RESET);
+            System.out
+                    .println("║\t" + ConsoleColors.INFO + "2. Register participant in an event." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "3. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "4. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
@@ -179,14 +198,22 @@ public class Menu {
                 name = scanner.nextLine();
             }
 
+            if (option == 2) {
+                System.out.print(ConsoleColors.INPUT + "Wich event do you want to add the participant? Key: "
+                        + ConsoleColors.RESET);
+                keyEvent = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.print(ConsoleColors.INPUT + "Cpf of participant: " + ConsoleColors.RESET);
+                cpf = scanner.nextLine();
+            }
+
             switch (option) {
                 case 1:
                     ParticipantManager.registerParticipant(cpf, name);
-                    successfull("REGISTERING THE PARTICIPANT");
                     break;
                 case 2:
-                    EventManager.registerParticipantToEvent(0, "0");
-                    successfull("REGISTERING THE PARTICIPANT IN AN EVENT");
+                    EventManager.registerParticipantToEvent(keyEvent, cpf);
                     break;
                 case 3:
                     successfull("");
@@ -196,19 +223,7 @@ public class Menu {
                     break;
                 case 0:
                     return;
-                default:
-                    Utils.cleanScreen();
-                    System.out
-                            .println("╔══════════════════════════════════════════════════════════════════════════════");
-                    System.out.println("║\t\t\t" + ConsoleColors.WARNING + "Invalid option, please try again."
-                            + ConsoleColors.RESET);
-                    System.out
-                            .println("╠══════════════════════════════════════════════════════════════════════════════");
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                    }
-                    break;
+                default: Menu.invalidOption(); break;
             }
         } while (option != 0);
     }
@@ -216,7 +231,7 @@ public class Menu {
     public static void successfull(String text) {
         Utils.cleanScreen();
         System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
-        System.out.println("║\t\t\t" + ConsoleColors.INFO + "SUCCESS IN " + text  + ConsoleColors.RESET);
+        System.out.println("║\t\t\t" + ConsoleColors.INFO + "[SUCCESS] " + text + ConsoleColors.RESET);
         System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
 
         try {
@@ -228,9 +243,23 @@ public class Menu {
     public static void error(String text) {
         Utils.cleanScreen();
         System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
-        System.out.println("║\t\t\t" + ConsoleColors.INFO + "ERROR IN " + text  + ConsoleColors.RESET);
+        System.out.println("║\t\t\t" + ConsoleColors.INFO + "[ERROR] " + text + ConsoleColors.RESET);
         System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+        }
+    }
+
+    public static void invalidOption() {
+        Utils.cleanScreen();
+        System.out
+                .println("╔══════════════════════════════════════════════════════════════════════════════");
+        System.out.println("║\t\t\t" + ConsoleColors.WARNING + "Invalid option, please try again."
+                + ConsoleColors.RESET);
+        System.out
+                .println("╠══════════════════════════════════════════════════════════════════════════════");
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

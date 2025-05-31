@@ -10,6 +10,7 @@ import com.INF008.app.participants.Participant;
 
 public class Event {
     private String title;
+
     private String date;
     private String local;
     private int capacity;
@@ -22,7 +23,7 @@ public class Event {
         }
     };
 
-    TreeSet<Participant> participantsOfEvent = new TreeSet<>(comparatorByName);
+    private TreeSet<Participant> participantsOfEvent = new TreeSet<>(comparatorByName);
 
     public Event(String title, String date, String local, int capacity, String description) {
         this.title = title;
@@ -32,14 +33,24 @@ public class Event {
         this.description = description;
     }
 
-    public void registerParticipantToEvent(Participant participant){
+    public void registerParticipantToEvent(Participant participant) {
         participantsOfEvent.add(participant);
         System.out.println(participantsOfEvent.contains(participant));
+    }
+
+    public int getNumberOfParticipants() {
+        return participantsOfEvent.size();
     }
 
     public String getTitle() {
         return title;
     }
-    
-   
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public TreeSet<Participant> getParticipantsOfEvent() {
+        return participantsOfEvent;
+    }
 }
