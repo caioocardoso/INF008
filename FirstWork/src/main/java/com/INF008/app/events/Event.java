@@ -10,8 +10,8 @@ import com.INF008.app.participants.Participant;
 
 public class Event {
     private String title;
-
     private String date;
+
     private String local;
     private int capacity;
     private String description;
@@ -48,6 +48,10 @@ public class Event {
 
     public int getCapacity() {
         return capacity;
+    }
+    
+    public String getDate() {
+        return date;
     }
 
     public TreeSet<Participant> getParticipantsOfEvent() {
