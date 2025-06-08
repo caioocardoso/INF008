@@ -1,0 +1,9 @@
+package com.INF008.app.participants;
+
+public class Student extends Participant{
+
+    public Student(String cpf, String name) {
+        super(cpf, name);
+    }
+
+}

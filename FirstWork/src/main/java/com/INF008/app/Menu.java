@@ -21,7 +21,7 @@ public class Menu {
             System.out.println("║\t" + ConsoleColors.INFO + "1. Register Event." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "2. Register participant." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "3. Event report" + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "4. " + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "4. Create a certificate" + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "5. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "6. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
@@ -83,13 +83,12 @@ public class Menu {
             option = scanner.nextInt();
             scanner.nextLine();
 
-            EventManager.populateEvents();
-
             switch (option) {
                 case 1:
                     EventManager.eventsReportByRegistrationOrder();
                     break;
                 case 2:
+                    EventManager.eventsReportByType();
                     break;
                 case 3:
                     break;
@@ -150,12 +149,15 @@ public class Menu {
                     successfull("REGISTERING THE LECTURE");
                     break;
                 case 2:
+                    EventManager.createWorkshop(title, date, local, capacity, description);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 3:
+                    EventManager.createCourse(title, date, local, capacity, description);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 4:
+                    EventManager.createFair(title, date, local, capacity, description);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 0:
@@ -171,6 +173,7 @@ public class Menu {
         int option = 0;
         String cpf = "";
         String name = "";
+        int typeOfParticipant = 0;
         int keyEvent = -1;
 
         do {
@@ -191,6 +194,12 @@ public class Menu {
             scanner.nextLine();
 
             if (option == 1) {
+                System.out.println(ConsoleColors.INPUT + "Participant is a Student? Press 1" + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.INPUT + "Participant is a Teacher? Press 2" + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.INPUT + "Participant is an External? Press 3" + ConsoleColors.RESET);
+                typeOfParticipant = scanner.nextInt();
+                scanner.nextLine();
+
                 System.out.print(ConsoleColors.INPUT + "Cpf: " + ConsoleColors.RESET);
                 cpf = scanner.nextLine();
 
@@ -210,7 +219,7 @@ public class Menu {
 
             switch (option) {
                 case 1:
-                    ParticipantManager.registerParticipant(cpf, name);
+                    ParticipantManager.registerParticipant(typeOfParticipant, cpf, name);
                     break;
                 case 2:
                     EventManager.registerParticipantToEvent(keyEvent, cpf);

@@ -4,7 +4,10 @@ C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\events\Ev
 C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\events\Lecture.java
 C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\events\Workshop.java
 C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\Menu.java
+C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\participants\External.java
 C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\participants\Participant.java
+C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\participants\Student.java
+C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\participants\Teacher.java
 C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\services\EventManager.java
 C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\services\iEvent.java
 C:\Users\caioo\workspace\INF008\FirstWork\src\main\java\com\INF008\app\services\ParticipantManager.java

@@ -57,4 +57,12 @@ public class Event {
     public TreeSet<Participant> getParticipantsOfEvent() {
         return participantsOfEvent;
     }
+
+    public String getLocal() {
+        return local;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

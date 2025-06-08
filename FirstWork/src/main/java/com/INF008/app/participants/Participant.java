@@ -3,6 +3,10 @@ package com.INF008.app.participants;
 public class Participant {
     String cpf;
     String name;
+    
+    public String getCpf() {
+        return cpf;
+    }
 
     public String getName() {
         return name;
