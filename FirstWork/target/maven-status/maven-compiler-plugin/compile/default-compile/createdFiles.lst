@@ -1,6 +1,8 @@
 com\INF008\app\participants\Participant.class
 com\INF008\app\events\Event$1.class
 com\INF008\app\utils\Utils.class
+com\INF008\app\events\Workshop.class
+com\INF008\app\events\AcademicFair.class
 com\INF008\app\events\Event.class
 com\INF008\app\participants\Student.class
 com\INF008\app\services\ParticipantManager.class
@@ -8,6 +10,7 @@ com\INF008\app\University.class
 com\INF008\app\Menu.class
 com\INF008\app\utils\ConsoleColors.class
 com\INF008\app\services\iEvent.class
+com\INF008\app\events\Course.class
 com\INF008\app\services\EventManager.class
 com\INF008\app\participants\Teacher.class
 com\INF008\app\events\Lecture.class

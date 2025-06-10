@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeSet;
 import java.time.LocalDateTime;
 
 import com.INF008.app.Menu;
@@ -16,6 +17,17 @@ import com.INF008.app.participants.Participant;
 import com.INF008.app.participants.Student;
 import com.INF008.app.utils.ConsoleColors;
 import com.INF008.app.utils.Utils;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.properties.TextAlignment;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class EventManager implements iEvent {
     private static int counter = 1;
@@ -50,6 +62,15 @@ public class EventManager implements iEvent {
         } else {
             return "Error: Event found for key " + key + " doesnt exists.";
         }
+    }
+
+    public static Event getEvent(int key) {
+        Event event = events.get(key);
+
+        if (event == null)
+            return null;
+        else
+            return event;
     }
 
     public static void registerParticipantToEvent(int keyEvent, String cpfParticipant) {
@@ -211,5 +232,48 @@ public class EventManager implements iEvent {
         scanner.nextLine();
     }
 
-    public static void generateCertificate(){}
+    public static void generateCertificate(int keyEvent, String cpfParticipant) {
+        Event event = EventManager.getEvent(keyEvent);
+        Participant participant = ParticipantManager.getParticipant(cpfParticipant);
+
+        if (event == null) {
+            Menu.error("EVENT NOT FOUND");
+            return;
+        }
+        if (participant == null) {
+            Menu.error("PARTICIPANT NOT FOUND");
+            return;
+        }
+
+        TreeSet<Participant> participantsOfEvent = event.getParticipantsOfEvent();
+
+        if (!participantsOfEvent.contains(participant)) {
+            Menu.error("PARTICIPANT DOESNT BELONG TO THE EVENT");
+            return;
+        }
+        try {
+            PdfWriter writer = new PdfWriter(new FileOutputStream("src/main/resources/certificate.pdf"));
+
+            PdfDocument pdfDoc = new PdfDocument(writer = writer);
+            Document document = new Document(pdfDoc);
+
+            Paragraph heading = new Paragraph("CERTIFICATE")
+                    .setFontSize(14)
+                    .setTextAlignment(TextAlignment.CENTER);
+            document.add(heading);
+
+            Paragraph p = new Paragraph(
+                    "The university certifies that " + participant.getName() + ", holder of CPF " + participant.getCpf()
+                            + ", participated in the event " + event.getTitle() + ", held on " + event.getDate() + ".")
+                    .setFontSize(12);
+            document.add(p);
+
+            document.close();
+
+            Menu.successfull("CERTIFICATE DOWNLOADED SUCCESSFULLY");
+        } catch (IOException e) {
+            System.err.println("Erro ao gerar certificado: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

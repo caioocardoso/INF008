@@ -22,7 +22,7 @@ public class Menu {
             System.out.println("║\t" + ConsoleColors.INFO + "1. Register Event." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "2. Register participant." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "3. Event report" + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "4. Create a certificate" + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "4. Request a certificate" + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "5. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "6. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
@@ -242,11 +242,21 @@ public class Menu {
 
     public static void certificateMenu() {
         String cpf = "";
-        int keyEvent;
-        Participant participant;
-        Event event;
+        int keyEvent = 0;
 
-        participant = ParticipantManager.getParticipant(cpf);
+        Utils.cleanScreen();
+        System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
+        System.out.println("║\t\t\t" + ConsoleColors.INFO + "REQUEST CERTIFICATE" + ConsoleColors.RESET);
+        System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
+
+        System.out.print(ConsoleColors.INPUT + "Event key: " + ConsoleColors.RESET);
+        keyEvent = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print(ConsoleColors.INPUT + "Cpf: " + ConsoleColors.RESET);
+        cpf = scanner.nextLine();
+
+        EventManager.generateCertificate(keyEvent, cpf);
     }
 
     public static void successfull(String text) {
