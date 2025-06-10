@@ -3,6 +3,7 @@ package com.INF008.app;
 import java.util.Scanner;
 
 import com.INF008.app.events.Event;
+import com.INF008.app.participants.Participant;
 import com.INF008.app.services.EventManager;
 import com.INF008.app.services.ParticipantManager;
 import com.INF008.app.utils.ConsoleColors;
@@ -42,7 +43,7 @@ public class Menu {
                     eventReportMenu();
                     break;
                 case 4:
-
+                    certificateMenu();
                     break;
                 case 5:
 
@@ -237,6 +238,15 @@ public class Menu {
                     break;
             }
         } while (option != 0);
+    }
+
+    public static void certificateMenu() {
+        String cpf = "";
+        int keyEvent;
+        Participant participant;
+        Event event;
+
+        participant = ParticipantManager.getParticipant(cpf);
     }
 
     public static void successfull(String text) {

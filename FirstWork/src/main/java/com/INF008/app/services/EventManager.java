@@ -79,7 +79,7 @@ public class EventManager implements iEvent {
         Menu.successfull("REGISTERED SUCCESSFULLY");
     }
 
-    public static void populateEvents() { // Helper to add some sample data
+    public static void populateEvents() {
         createLecture("Music Festival 2024", "03/05/2026", "Annual music event.", 1, "oi");
         createLecture("Tech Conference Global", "28/02/2025", "Leading tech conference.", 1, "oi");
         createLecture("Local Charity Run", "25/08/2027", "5k run for charity.", 1, "oi");
@@ -210,4 +210,6 @@ public class EventManager implements iEvent {
         System.out.println(ConsoleColors.INPUT + "Press Enter to return..." + ConsoleColors.RESET);
         scanner.nextLine();
     }
+
+    public static void generateCertificate(){}
 }
