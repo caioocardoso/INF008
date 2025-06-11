@@ -32,23 +32,27 @@ public class EventManager {
     private static HashMap<Integer, Event> events = new LinkedHashMap<>();
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void createLecture(String title, String date, String local, int capacity, String description) {
-        Lecture newLecture = new Lecture(title, date, local, capacity, description);
+    public static void createLecture(String title, String date, String local, int capacity, String description,
+            boolean isOnline) {
+        Lecture newLecture = new Lecture(title, date, local, capacity, description, isOnline);
         events.put(counter++, (Event) newLecture);
     }
 
-    public static void createFair(String title, String date, String local, int capacity, String description) {
-        AcademicFair newFair = new AcademicFair(title, date, local, capacity, description);
+    public static void createFair(String title, String date, String local, int capacity, String description,
+            boolean isOnline) {
+        AcademicFair newFair = new AcademicFair(title, date, local, capacity, description, isOnline);
         events.put(counter++, (Event) newFair);
     }
 
-    public static void createCourse(String title, String date, String local, int capacity, String description) {
-        Course newCourse = new Course(title, date, local, capacity, description);
+    public static void createCourse(String title, String date, String local, int capacity, String description,
+            boolean isOnline) {
+        Course newCourse = new Course(title, date, local, capacity, description, isOnline);
         events.put(counter++, (Event) newCourse);
     }
 
-    public static void createWorkshop(String title, String date, String local, int capacity, String description) {
-        Workshop newWorkshop = new Workshop(title, date, local, capacity, description);
+    public static void createWorkshop(String title, String date, String local, int capacity, String description,
+            boolean isOnline) {
+        Workshop newWorkshop = new Workshop(title, date, local, capacity, description, isOnline);
         events.put(counter++, (Event) newWorkshop);
     }
 
@@ -99,10 +103,10 @@ public class EventManager {
     }
 
     public static void populateEvents() {
-        createLecture("Music Festival 2024", "03/05/2026", "Annual music event.", 1, "oi");
-        createLecture("Tech Conference Global", "28/02/2025", "Leading tech conference.", 1, "oi");
-        createLecture("Local Charity Run", "25/08/2027", "5k run for charity.", 1, "oi");
-        createWorkshop("Art Exhibition Opening", "02/11/2025", "New modern art pieces.", 1, "oi");
+        createLecture("Music Festival 2024", "03/05/2026", "Annual music event.", 1, "oi", true);
+        createLecture("Tech Conference Global", "28/02/2025", "Leading tech conference.", 1, "oi", true);
+        createLecture("Local Charity Run", "25/08/2027", "5k run for charity.", 1, "oi", false);
+        createWorkshop("Art Exhibition Opening", "02/11/2025", "New modern art pieces.", 1, "oi", false);
     }
 
     public static void eventsReportByRegistrationOrder() {
@@ -211,7 +215,13 @@ public class EventManager {
         System.out.println(
                 "║ " + ConsoleColors.INFO + "Type: " + ConsoleColors.RESET + eventFound.getClass().getSimpleName());
         System.out.println("║ " + ConsoleColors.INFO + "Date: " + ConsoleColors.RESET + eventFound.getDate());
-        System.out.println("║ " + ConsoleColors.INFO + "Local: " + ConsoleColors.RESET + eventFound.getLocal());
+        if (eventFound.isOnline()) {
+            System.out.println("║ " + ConsoleColors.INFO + "Modality: " + ConsoleColors.RESET + "Online");
+            System.out.println("║ " + ConsoleColors.INFO + "Link: " + ConsoleColors.RESET + eventFound.getLocal());
+        } else {
+            System.out.println("║ " + ConsoleColors.INFO + "Modality: " + ConsoleColors.RESET + "Presential");
+            System.out.println("║ " + ConsoleColors.INFO + "Local: " + ConsoleColors.RESET + eventFound.getLocal());
+        }
         System.out.println("║ " + ConsoleColors.INFO + "Capacity: " + ConsoleColors.RESET + eventFound.getCapacity());
         System.out.println("║ " + ConsoleColors.INFO + "Participants: " + ConsoleColors.RESET
                 + eventFound.getNumberOfParticipants());
@@ -259,12 +269,18 @@ public class EventManager {
                     .setTextAlignment(TextAlignment.CENTER);
             document.add(heading);
 
+            String eventMode;
+            if (event.isOnline())
+                eventMode = " in online mode";
+            else
+                eventMode = " in presential mode";
+
             if (participant instanceof Student) {
                 Paragraph p = new Paragraph(
                         "The university certifies that " + participant.getName() + ", holder of CPF "
                                 + participant.getCpf() +
                                 ", registration number " + ((Student) participant).getMatricula() +
-                                ", participated in the event " + event.getTitle() + ", held on " + event.getDate()
+                                ", participated in the event " + event.getTitle() + ", held on " + event.getDate() + eventMode
                                 + ".")
                         .setFontSize(12);
                 document.add(p);
@@ -273,7 +289,7 @@ public class EventManager {
                         "The university certifies that " + participant.getName() + ", holder of CPF "
                                 + participant.getCpf() +
                                 ", employee ID " + ((Teacher) participant).getTeacherCode() +
-                                ", participated in the event " + event.getTitle() + ", held on " + event.getDate()
+                                ", participated in the event " + event.getTitle() + ", held on " + event.getDate() + eventMode
                                 + ".")
                         .setFontSize(12);
                 document.add(p);
@@ -282,7 +298,7 @@ public class EventManager {
                         "The university certifies that " + participant.getName() + ", holder of CPF "
                                 + participant.getCpf() +
                                 ", external ID " + ((External) participant).getExternalCode() +
-                                ", participated in the event " + event.getTitle() + ", held on " + event.getDate()
+                                ", participated in the event " + event.getTitle() + ", held on " + event.getDate() + eventMode
                                 + ".")
                         .setFontSize(12);
                 document.add(p);
@@ -290,7 +306,7 @@ public class EventManager {
 
             document.close();
 
-            Menu.successfull("CERTIFICATE DOWNLOADED SUCCESSFULLY");
+            Menu.successfull("CERTIFICATE DOWNLOADED SUCCESSFULLY IN\n src/main/resources/certificate.pdf");
         } catch (IOException e) {
             System.err.println("Erro ao gerar certificado: " + e.getMessage());
             e.printStackTrace();

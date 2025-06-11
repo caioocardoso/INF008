@@ -110,6 +110,7 @@ public class Menu {
         String local = "";
         int capacity = 0;
         String description = "";
+        boolean isOnline = false;
 
         do {
             Utils.cleanScreen();
@@ -134,7 +135,14 @@ public class Menu {
                 System.out.print(ConsoleColors.INPUT + "Date: " + ConsoleColors.RESET);
                 date = scanner.nextLine();
 
-                System.out.print(ConsoleColors.INPUT + "Local: " + ConsoleColors.RESET);
+                System.out.print(ConsoleColors.INPUT + "Is online? (true or false) " + ConsoleColors.RESET);
+                isOnline = scanner.nextBoolean();
+                scanner.nextLine();
+
+                if (isOnline)
+                    System.out.print(ConsoleColors.INPUT + "Link: " + ConsoleColors.RESET);
+                else
+                    System.out.print(ConsoleColors.INPUT + "Local: " + ConsoleColors.RESET);
                 local = scanner.nextLine();
 
                 System.out.print(ConsoleColors.INPUT + "Capacity: " + ConsoleColors.RESET);
@@ -143,23 +151,24 @@ public class Menu {
 
                 System.out.print(ConsoleColors.INPUT + "Description: " + ConsoleColors.RESET);
                 description = scanner.nextLine();
+
             }
 
             switch (type) {
                 case 1:
-                    EventManager.createLecture(title, date, local, capacity, description);
+                    EventManager.createLecture(title, date, local, capacity, description, isOnline);
                     successfull("REGISTERING THE LECTURE");
                     break;
                 case 2:
-                    EventManager.createWorkshop(title, date, local, capacity, description);
+                    EventManager.createWorkshop(title, date, local, capacity, description, isOnline);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 3:
-                    EventManager.createCourse(title, date, local, capacity, description);
+                    EventManager.createCourse(title, date, local, capacity, description, isOnline);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 4:
-                    EventManager.createFair(title, date, local, capacity, description);
+                    EventManager.createFair(title, date, local, capacity, description, isOnline);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 0:

@@ -11,10 +11,10 @@ import com.INF008.app.participants.Participant;
 public class Event implements iEvent{
     private String title;
     private String date;
-
     private String local;
     private int capacity;
     private String description;
+    private boolean isOnline;
 
     Comparator<Participant> comparatorByName = new Comparator<Participant>() {
         @Override
@@ -25,12 +25,13 @@ public class Event implements iEvent{
 
     private TreeSet<Participant> participantsOfEvent = new TreeSet<>(comparatorByName);
 
-    public Event(String title, String date, String local, int capacity, String description) {
+    public Event(String title, String date, String local, int capacity, String description, boolean isOnline) {
         this.title = title;
         this.date = date;
         this.local = local;
         this.capacity = capacity;
         this.description = description;
+        this.isOnline = isOnline;
     }
 
     public void registerParticipantToEvent(Participant participant) {
@@ -64,5 +65,9 @@ public class Event implements iEvent{
 
     public String getDescription() {
         return description;
+    }
+    
+    public boolean isOnline() {
+        return isOnline;
     }
 }
