@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 import com.INF008.app.participants.Participant;
 
-public class Event {
+public class Event implements iEvent{
     private String title;
     private String date;
 

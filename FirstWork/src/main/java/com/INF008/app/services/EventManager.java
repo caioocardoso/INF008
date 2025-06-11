@@ -2,7 +2,6 @@ package com.INF008.app.services;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeSet;
 import java.time.LocalDateTime;
@@ -13,23 +12,22 @@ import com.INF008.app.events.Course;
 import com.INF008.app.events.Event;
 import com.INF008.app.events.Lecture;
 import com.INF008.app.events.Workshop;
+import com.INF008.app.participants.External;
 import com.INF008.app.participants.Participant;
 import com.INF008.app.participants.Student;
+import com.INF008.app.participants.Teacher;
 import com.INF008.app.utils.ConsoleColors;
 import com.INF008.app.utils.Utils;
 import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.properties.TextAlignment;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class EventManager implements iEvent {
+public class EventManager {
     private static int counter = 1;
     private static HashMap<Integer, Event> events = new LinkedHashMap<>();
     private static Scanner scanner = new Scanner(System.in);
@@ -228,8 +226,7 @@ public class EventManager implements iEvent {
             }
         }
         System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
-        System.out.println(ConsoleColors.INPUT + "Press Enter to return..." + ConsoleColors.RESET);
-        scanner.nextLine();
+        Utils.pressEnterToContinue(scanner);
     }
 
     public static void generateCertificate(int keyEvent, String cpfParticipant) {
@@ -262,11 +259,34 @@ public class EventManager implements iEvent {
                     .setTextAlignment(TextAlignment.CENTER);
             document.add(heading);
 
-            Paragraph p = new Paragraph(
-                    "The university certifies that " + participant.getName() + ", holder of CPF " + participant.getCpf()
-                            + ", participated in the event " + event.getTitle() + ", held on " + event.getDate() + ".")
-                    .setFontSize(12);
-            document.add(p);
+            if (participant instanceof Student) {
+                Paragraph p = new Paragraph(
+                        "The university certifies that " + participant.getName() + ", holder of CPF "
+                                + participant.getCpf() +
+                                ", registration number " + ((Student) participant).getMatricula() +
+                                ", participated in the event " + event.getTitle() + ", held on " + event.getDate()
+                                + ".")
+                        .setFontSize(12);
+                document.add(p);
+            } else if (participant instanceof Teacher) {
+                Paragraph p = new Paragraph(
+                        "The university certifies that " + participant.getName() + ", holder of CPF "
+                                + participant.getCpf() +
+                                ", employee ID " + ((Teacher) participant).getTeacherCode() +
+                                ", participated in the event " + event.getTitle() + ", held on " + event.getDate()
+                                + ".")
+                        .setFontSize(12);
+                document.add(p);
+            } else if (participant instanceof External) {
+                Paragraph p = new Paragraph(
+                        "The university certifies that " + participant.getName() + ", holder of CPF "
+                                + participant.getCpf() +
+                                ", external ID " + ((External) participant).getExternalCode() +
+                                ", participated in the event " + event.getTitle() + ", held on " + event.getDate()
+                                + ".")
+                        .setFontSize(12);
+                document.add(p);
+            }
 
             document.close();
 

@@ -1,5 +1,6 @@
 package com.INF008.app;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 import com.INF008.app.events.Event;
@@ -22,8 +23,8 @@ public class Menu {
             System.out.println("║\t" + ConsoleColors.INFO + "1. Register Event." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "2. Register participant." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "3. Event report" + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "4. Request a certificate" + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "5. " + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "4. Participant report" + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "5. Request a certificate" + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "6. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
             System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
@@ -43,10 +44,10 @@ public class Menu {
                     eventReportMenu();
                     break;
                 case 4:
-                    certificateMenu();
+                    ParticipantManager.participantsReport();
                     break;
                 case 5:
-
+                    certificateMenu();
                     break;
                 case 6:
 
