@@ -280,6 +280,7 @@ public class Menu {
         int keyEvent = Utils.isNumber(keyEventStr);
         if(keyEvent == -1){
             error("EVENT KEY MUST BE AN INTEGER");
+            return;
         }
         System.out.print(ConsoleColors.INPUT + "Cpf: " + ConsoleColors.RESET);
         cpf = scanner.nextLine();
