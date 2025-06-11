@@ -1,10 +1,7 @@
 package com.INF008.app;
 
-import java.util.HashMap;
 import java.util.Scanner;
 
-import com.INF008.app.events.Event;
-import com.INF008.app.participants.Participant;
 import com.INF008.app.services.EventManager;
 import com.INF008.app.services.ParticipantManager;
 import com.INF008.app.utils.ConsoleColors;
@@ -25,7 +22,6 @@ public class Menu {
             System.out.println("║\t" + ConsoleColors.INFO + "3. Event report" + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "4. Participant report" + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "5. Request a certificate" + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "6. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
             System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
             System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
@@ -48,9 +44,6 @@ public class Menu {
                     break;
                 case 5:
                     certificateMenu();
-                    break;
-                case 6:
-
                     break;
                 case 0:
                     Utils.cleanScreen();
@@ -77,7 +70,7 @@ public class Menu {
             System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
             System.out.println("║\t" + ConsoleColors.INFO + "1. Report by registration order." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "2. Report by type." + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "3. Report by date." + ConsoleColors.RESET);
+            // System.out.println("║\t" + ConsoleColors.INFO + "3. Report by date." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
             System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
             System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
@@ -91,8 +84,6 @@ public class Menu {
                     break;
                 case 2:
                     EventManager.eventsReportByType();
-                    break;
-                case 3:
                     break;
                 case 0:
                     return;
@@ -139,10 +130,11 @@ public class Menu {
                 isOnline = scanner.nextBoolean();
                 scanner.nextLine();
 
-                if (isOnline)
-                    System.out.print(ConsoleColors.INPUT + "Link: " + ConsoleColors.RESET);
-                else
+                if (isOnline) {
+                    System.out.print(ConsoleColors.INPUT + "Link: " + ConsoleColors.RESET); 
+                }else {
                     System.out.print(ConsoleColors.INPUT + "Local: " + ConsoleColors.RESET);
+                }
                 local = scanner.nextLine();
 
                 System.out.print(ConsoleColors.INPUT + "Capacity: " + ConsoleColors.RESET);
@@ -156,19 +148,29 @@ public class Menu {
 
             switch (type) {
                 case 1:
-                    EventManager.createLecture(title, date, local, capacity, description, isOnline);
+                    System.out.print(ConsoleColors.INPUT + "Name of speaker: " + ConsoleColors.RESET);
+                    String speaker = scanner.nextLine();
+                    EventManager.createLecture(title, date, local, capacity, description, isOnline, speaker);
                     successfull("REGISTERING THE LECTURE");
                     break;
                 case 2:
-                    EventManager.createWorkshop(title, date, local, capacity, description, isOnline);
+                    System.out.print(ConsoleColors.INPUT + "Topic: " + ConsoleColors.RESET);
+                    String topic = scanner.nextLine();
+                    EventManager.createWorkshop(title, date, local, capacity, description, isOnline, topic);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 3:
-                    EventManager.createCourse(title, date, local, capacity, description, isOnline);
+                    System.out.print(ConsoleColors.INPUT + "Duration in hours: " + ConsoleColors.RESET);
+                    int durationInHours = scanner.nextInt();
+                    scanner.nextLine();
+                    EventManager.createCourse(title, date, local, capacity, description, isOnline, durationInHours);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 4:
-                    EventManager.createFair(title, date, local, capacity, description, isOnline);
+                    System.out.print(ConsoleColors.INPUT + "Number of exhibitors: " + ConsoleColors.RESET);
+                    int numberOfExhibitors = scanner.nextInt();
+                    scanner.nextLine();
+                    EventManager.createFair(title, date, local, capacity, description, isOnline, numberOfExhibitors);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 0:
@@ -195,8 +197,6 @@ public class Menu {
             System.out.println("║\t" + ConsoleColors.INFO + "1. Register participant." + ConsoleColors.RESET);
             System.out
                     .println("║\t" + ConsoleColors.INFO + "2. Register participant in an event." + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "3. " + ConsoleColors.RESET);
-            System.out.println("║\t" + ConsoleColors.INFO + "4. " + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
             System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
             System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
@@ -234,12 +234,6 @@ public class Menu {
                     break;
                 case 2:
                     EventManager.registerParticipantToEvent(keyEvent, cpf);
-                    break;
-                case 3:
-                    successfull("");
-                    break;
-                case 4:
-                    successfull("");
                     break;
                 case 0:
                     return;
@@ -306,4 +300,5 @@ public class Menu {
         } catch (InterruptedException e) {
         }
     }
+
 }
