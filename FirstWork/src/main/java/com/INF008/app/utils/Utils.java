@@ -23,4 +23,13 @@ public class Utils {
         System.out.println(ConsoleColors.INPUT + "Press Enter to return..." + ConsoleColors.RESET);
         scanner.nextLine();
     }
+
+    public static Integer isNumber(String value){
+        try{
+            int num = Integer.valueOf(value);
+            return num;
+        }catch(Exception e){
+            return -1;
+        }
+    }
 }
