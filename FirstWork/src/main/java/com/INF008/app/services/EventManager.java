@@ -111,6 +111,9 @@ public class EventManager {
     }
 
     public static void eventsReportByRegistrationOrder() {
+        String optionStr;
+        int option;
+
         Utils.cleanScreen();
         System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
         System.out.println(
@@ -130,10 +133,13 @@ public class EventManager {
         System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
         System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
 
-        int option = scanner.nextInt();
-        scanner.nextLine();
+        optionStr = scanner.nextLine();
+        option = Utils.isNumber(optionStr);
 
         if (option == 0) {
+            return;
+        } else if (option == -1) {
+            Menu.error("MUST BE AN INTEGER");
             return;
         } else {
             eventDetails(option);
@@ -141,6 +147,9 @@ public class EventManager {
     }
 
     public static void eventsReportByType() {
+        String optionStr;
+        int option;
+        
         Utils.cleanScreen();
         System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
         System.out.println(
@@ -196,10 +205,13 @@ public class EventManager {
         System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
         System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
 
-        int option = scanner.nextInt();
-        scanner.nextLine();
+        optionStr = scanner.nextLine();
+        option = Utils.isNumber(optionStr);
 
         if (option == 0) {
+            return;
+        } else if (option == -1) {
+            Menu.error("MUST BE AN INTEGER");
             return;
         } else {
             eventDetails(option);
