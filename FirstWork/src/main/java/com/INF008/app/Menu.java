@@ -11,6 +11,7 @@ public class Menu {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void showMainMenu() {
+        String optionStr;
         int option;
         do {
             System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
@@ -26,8 +27,8 @@ public class Menu {
             System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
             System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
 
-            option = scanner.nextInt();
-            scanner.nextLine();
+            optionStr = scanner.nextLine();
+            option = Utils.isNumber(optionStr);
 
             switch (option) {
                 case 1:
@@ -62,6 +63,7 @@ public class Menu {
     }
 
     private static void eventReportMenu() {
+        String optionStr;
         int option;
         Utils.cleanScreen();
         do {
@@ -75,8 +77,8 @@ public class Menu {
             System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
             System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
 
-            option = scanner.nextInt();
-            scanner.nextLine();
+            optionStr = scanner.nextLine();
+            option = Utils.isNumber(optionStr);
 
             switch (option) {
                 case 1:
@@ -95,7 +97,8 @@ public class Menu {
     }
 
     public static void registerEventMenu() {
-        int type = 0;
+        int type;
+        String typeStr;
         String title = "";
         String date = "";
         String local = "";
@@ -116,8 +119,8 @@ public class Menu {
             System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
             System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
 
-            type = scanner.nextInt();
-            scanner.nextLine();
+            typeStr = scanner.nextLine();
+            type = Utils.isNumber(typeStr);
 
             if (type >= 1 && type <= 4) {
                 System.out.print(ConsoleColors.INPUT + "Title: " + ConsoleColors.RESET);
@@ -126,9 +129,9 @@ public class Menu {
                 System.out.print(ConsoleColors.INPUT + "Date: " + ConsoleColors.RESET);
                 date = scanner.nextLine();
 
-                System.out.print(ConsoleColors.INPUT + "Is online? (true or false) " + ConsoleColors.RESET);
-                isOnline = scanner.nextBoolean();
-                scanner.nextLine();
+                System.out.print(ConsoleColors.INPUT + "Is online? (Y/N) " + ConsoleColors.RESET);
+                String isOnlineStr = scanner.nextLine();
+                isOnline = isOnlineStr.equalsIgnoreCase("Y");
 
                 if (isOnline) {
                     System.out.print(ConsoleColors.INPUT + "Link: " + ConsoleColors.RESET); 
@@ -138,8 +141,12 @@ public class Menu {
                 local = scanner.nextLine();
 
                 System.out.print(ConsoleColors.INPUT + "Capacity: " + ConsoleColors.RESET);
-                capacity = scanner.nextInt();
-                scanner.nextLine();
+                String capacityStr = scanner.nextLine();
+                capacity = Utils.isNumber(capacityStr);
+                if(capacity == -1){
+                    error("CAPACITY MUST BE AN INTEGER");
+                    continue;
+                }
 
                 System.out.print(ConsoleColors.INPUT + "Description: " + ConsoleColors.RESET);
                 description = scanner.nextLine();
@@ -161,15 +168,23 @@ public class Menu {
                     break;
                 case 3:
                     System.out.print(ConsoleColors.INPUT + "Duration in hours: " + ConsoleColors.RESET);
-                    int durationInHours = scanner.nextInt();
-                    scanner.nextLine();
+                    String durationInHoursStr = scanner.nextLine();
+                    int durationInHours = Utils.isNumber(durationInHoursStr);
+                    if(durationInHours == -1){
+                        error("DURATION MUST BE AN INTEGER");
+                        continue;
+                    }
                     EventManager.createCourse(title, date, local, capacity, description, isOnline, durationInHours);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 4:
                     System.out.print(ConsoleColors.INPUT + "Number of exhibitors: " + ConsoleColors.RESET);
-                    int numberOfExhibitors = scanner.nextInt();
-                    scanner.nextLine();
+                    String numberOfExhibitorsStr = scanner.nextLine();
+                    int numberOfExhibitors = Utils.isNumber(numberOfExhibitorsStr);
+                    if(numberOfExhibitors == -1){
+                        error("EXHIBITOR MUST BE AN INTEGER");
+                        continue;
+                    }
                     EventManager.createFair(title, date, local, capacity, description, isOnline, numberOfExhibitors);
                     successfull("REGISTERING THE EVENT");
                     break;
@@ -183,7 +198,8 @@ public class Menu {
     }
 
     public static void registerParticipantMenu() {
-        int option = 0;
+        String optionStr;
+        int option;
         String cpf = "";
         String name = "";
         int typeOfParticipant = 0;
@@ -201,16 +217,19 @@ public class Menu {
             System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
             System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
 
-            option = scanner.nextInt();
-            scanner.nextLine();
+            optionStr = scanner.nextLine();
+            option = Utils.isNumber(optionStr);
 
             if (option == 1) {
                 System.out.println(ConsoleColors.INPUT + "Participant is a Student? Press 1" + ConsoleColors.RESET);
                 System.out.println(ConsoleColors.INPUT + "Participant is a Teacher? Press 2" + ConsoleColors.RESET);
                 System.out.println(ConsoleColors.INPUT + "Participant is an External? Press 3" + ConsoleColors.RESET);
-                typeOfParticipant = scanner.nextInt();
-                scanner.nextLine();
-
+                String typeOfParticipantStr = scanner.nextLine();
+                typeOfParticipant = Utils.isNumber(typeOfParticipantStr);
+                if(typeOfParticipant == -1){
+                    error("TYPE OF PARTICIPANT MUST BE AN INTEGER");
+                    continue;
+                }
                 System.out.print(ConsoleColors.INPUT + "Cpf: " + ConsoleColors.RESET);
                 cpf = scanner.nextLine();
 
@@ -221,8 +240,12 @@ public class Menu {
             if (option == 2) {
                 System.out.print(ConsoleColors.INPUT + "Wich event do you want to add the participant? Key: "
                         + ConsoleColors.RESET);
-                keyEvent = scanner.nextInt();
-                scanner.nextLine();
+                String keyEventStr = scanner.nextLine();
+                keyEvent = Utils.isNumber(keyEventStr);
+                if(keyEvent == -1){
+                    error("EVENT KEY MUST BE AN INTEGER");
+                    continue;
+                }
 
                 System.out.print(ConsoleColors.INPUT + "Cpf of participant: " + ConsoleColors.RESET);
                 cpf = scanner.nextLine();
@@ -246,7 +269,6 @@ public class Menu {
 
     public static void certificateMenu() {
         String cpf = "";
-        int keyEvent = 0;
 
         Utils.cleanScreen();
         System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
@@ -254,9 +276,11 @@ public class Menu {
         System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
 
         System.out.print(ConsoleColors.INPUT + "Event key: " + ConsoleColors.RESET);
-        keyEvent = scanner.nextInt();
-        scanner.nextLine();
-
+        String keyEventStr = scanner.nextLine();
+        int keyEvent = Utils.isNumber(keyEventStr);
+        if(keyEvent == -1){
+            error("EVENT KEY MUST BE AN INTEGER");
+        }
         System.out.print(ConsoleColors.INPUT + "Cpf: " + ConsoleColors.RESET);
         cpf = scanner.nextLine();
 
