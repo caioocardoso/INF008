@@ -9,8 +9,8 @@ public class Utils {
         System.out.println("\33[H\33[2J");
     }
 
-    private static final DateTimeFormatter DEFAULT_DATETIME_FORMATTER = DateTimeFormatter
-            .ofPattern("MM-dd-yyyy HH:mm:ss");
+    private static final DateTimeFormatter DEFAULT_DATETIME_FORMATTER = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
+    public static final DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     public static String dateToString(LocalDateTime date) {
         if (date == null) {

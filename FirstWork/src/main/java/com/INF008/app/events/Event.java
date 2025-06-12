@@ -1,5 +1,6 @@
 package com.INF008.app.events;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import com.INF008.app.participants.Participant;
 
 public class Event implements iEvent{
     private String title;
-    private String date;
+    private LocalDate date;
     private String local;
     private int capacity;
     private String description;
@@ -25,7 +26,7 @@ public class Event implements iEvent{
 
     private TreeSet<Participant> participantsOfEvent = new TreeSet<>(comparatorByName);
 
-    public Event(String title, String date, String local, int capacity, String description, boolean isOnline) {
+    public Event(String title, LocalDate date, String local, int capacity, String description, boolean isOnline) {
         this.title = title;
         this.date = date;
         this.local = local;
@@ -51,7 +52,7 @@ public class Event implements iEvent{
         return capacity;
     }
     
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

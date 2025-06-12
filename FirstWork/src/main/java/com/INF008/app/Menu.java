@@ -1,5 +1,6 @@
 package com.INF008.app;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import com.INF008.app.services.EventManager;
@@ -72,7 +73,7 @@ public class Menu {
             System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
             System.out.println("║\t" + ConsoleColors.INFO + "1. Report by registration order." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "2. Report by type." + ConsoleColors.RESET);
-            // System.out.println("║\t" + ConsoleColors.INFO + "3. Report by date." + ConsoleColors.RESET);
+            System.out.println("║\t" + ConsoleColors.INFO + "3. Report by date." + ConsoleColors.RESET);
             System.out.println("║\t" + ConsoleColors.INFO + "0. Leave" + ConsoleColors.RESET);
             System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
             System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
@@ -87,6 +88,9 @@ public class Menu {
                 case 2:
                     EventManager.eventsReportByType();
                     break;
+                case 3:
+                    EventManager.eventsReportByDate();
+                    break;
                 case 0:
                     return;
                 default:
@@ -100,13 +104,14 @@ public class Menu {
         int type;
         String typeStr;
         String title = "";
-        String date = "";
+        LocalDate eventDate = null;
         String local = "";
         int capacity = 0;
         String description = "";
         boolean isOnline = false;
 
         do {
+            eventDate = null;
             Utils.cleanScreen();
             System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
             System.out.println("║\t\t\t" + ConsoleColors.INFO + "REGISTER EVENT" + ConsoleColors.RESET);
@@ -123,19 +128,27 @@ public class Menu {
             type = Utils.isNumber(typeStr);
 
             if (type >= 1 && type <= 4) {
+
                 System.out.print(ConsoleColors.INPUT + "Title: " + ConsoleColors.RESET);
                 title = scanner.nextLine();
 
-                System.out.print(ConsoleColors.INPUT + "Date: " + ConsoleColors.RESET);
-                date = scanner.nextLine();
+                while (eventDate == null) {
+                    System.out.print(ConsoleColors.INPUT + "Date (MM/dd/yyyy): " + ConsoleColors.RESET);
+                    String dateStr = scanner.nextLine();
+                    try {
+                        eventDate = LocalDate.parse(dateStr, Utils.displayFormatter);
+                    } catch (Exception e) {
+                        error("PLEASE MAKE SURE THE DATE IS CORRECT");
+                    }
+                }
 
                 System.out.print(ConsoleColors.INPUT + "Is online? (Y/N) " + ConsoleColors.RESET);
                 String isOnlineStr = scanner.nextLine();
                 isOnline = isOnlineStr.equalsIgnoreCase("Y");
 
                 if (isOnline) {
-                    System.out.print(ConsoleColors.INPUT + "Link: " + ConsoleColors.RESET); 
-                }else {
+                    System.out.print(ConsoleColors.INPUT + "Link: " + ConsoleColors.RESET);
+                } else {
                     System.out.print(ConsoleColors.INPUT + "Local: " + ConsoleColors.RESET);
                 }
                 local = scanner.nextLine();
@@ -143,7 +156,7 @@ public class Menu {
                 System.out.print(ConsoleColors.INPUT + "Capacity: " + ConsoleColors.RESET);
                 String capacityStr = scanner.nextLine();
                 capacity = Utils.isNumber(capacityStr);
-                if(capacity == -1){
+                if (capacity == -1) {
                     error("CAPACITY MUST BE AN INTEGER");
                     continue;
                 }
@@ -157,35 +170,37 @@ public class Menu {
                 case 1:
                     System.out.print(ConsoleColors.INPUT + "Name of speaker: " + ConsoleColors.RESET);
                     String speaker = scanner.nextLine();
-                    EventManager.createLecture(title, date, local, capacity, description, isOnline, speaker);
+                    EventManager.createLecture(title, eventDate, local, capacity, description, isOnline, speaker);
                     successfull("REGISTERING THE LECTURE");
                     break;
                 case 2:
                     System.out.print(ConsoleColors.INPUT + "Topic: " + ConsoleColors.RESET);
                     String topic = scanner.nextLine();
-                    EventManager.createWorkshop(title, date, local, capacity, description, isOnline, topic);
+                    EventManager.createWorkshop(title, eventDate, local, capacity, description, isOnline, topic);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 3:
                     System.out.print(ConsoleColors.INPUT + "Duration in hours: " + ConsoleColors.RESET);
                     String durationInHoursStr = scanner.nextLine();
                     int durationInHours = Utils.isNumber(durationInHoursStr);
-                    if(durationInHours == -1){
+                    if (durationInHours == -1) {
                         error("DURATION MUST BE AN INTEGER");
                         continue;
                     }
-                    EventManager.createCourse(title, date, local, capacity, description, isOnline, durationInHours);
+                    EventManager.createCourse(title, eventDate, local, capacity, description, isOnline,
+                            durationInHours);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 4:
                     System.out.print(ConsoleColors.INPUT + "Number of exhibitors: " + ConsoleColors.RESET);
                     String numberOfExhibitorsStr = scanner.nextLine();
                     int numberOfExhibitors = Utils.isNumber(numberOfExhibitorsStr);
-                    if(numberOfExhibitors == -1){
+                    if (numberOfExhibitors == -1) {
                         error("EXHIBITOR MUST BE AN INTEGER");
                         continue;
                     }
-                    EventManager.createFair(title, date, local, capacity, description, isOnline, numberOfExhibitors);
+                    EventManager.createFair(title, eventDate, local, capacity, description, isOnline,
+                            numberOfExhibitors);
                     successfull("REGISTERING THE EVENT");
                     break;
                 case 0:
@@ -226,7 +241,7 @@ public class Menu {
                 System.out.println(ConsoleColors.INPUT + "Participant is an External? Press 3" + ConsoleColors.RESET);
                 String typeOfParticipantStr = scanner.nextLine();
                 typeOfParticipant = Utils.isNumber(typeOfParticipantStr);
-                if(typeOfParticipant == -1){
+                if (typeOfParticipant == -1) {
                     error("TYPE OF PARTICIPANT MUST BE AN INTEGER");
                     continue;
                 }
@@ -242,7 +257,7 @@ public class Menu {
                         + ConsoleColors.RESET);
                 String keyEventStr = scanner.nextLine();
                 keyEvent = Utils.isNumber(keyEventStr);
-                if(keyEvent == -1){
+                if (keyEvent == -1) {
                     error("EVENT KEY MUST BE AN INTEGER");
                     continue;
                 }
@@ -278,7 +293,7 @@ public class Menu {
         System.out.print(ConsoleColors.INPUT + "Event key: " + ConsoleColors.RESET);
         String keyEventStr = scanner.nextLine();
         int keyEvent = Utils.isNumber(keyEventStr);
-        if(keyEvent == -1){
+        if (keyEvent == -1) {
             error("EVENT KEY MUST BE AN INTEGER");
             return;
         }

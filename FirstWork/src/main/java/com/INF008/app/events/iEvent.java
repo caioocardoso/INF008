@@ -1,5 +1,6 @@
 package com.INF008.app.events;
 
+import java.time.LocalDate;
 import java.util.TreeSet;
 
 import com.INF008.app.participants.Participant;
@@ -9,7 +10,7 @@ public interface iEvent {
     public int getNumberOfParticipants();
     public String getTitle();
     public int getCapacity();
-    public String getDate();
+    public LocalDate getDate();
     public TreeSet<Participant> getParticipantsOfEvent();
     public String getLocal();
     public String getDescription();

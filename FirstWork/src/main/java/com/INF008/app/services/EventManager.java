@@ -2,9 +2,15 @@ package com.INF008.app.services;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -32,25 +38,26 @@ public class EventManager {
     private static HashMap<Integer, Event> events = new LinkedHashMap<>();
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void createLecture(String title, String date, String local, int capacity, String description,
+    public static void createLecture(String title, LocalDate date, String local, int capacity, String description,
             boolean isOnline, String speaker) {
         Lecture newLecture = new Lecture(title, date, local, capacity, description, isOnline, speaker);
         events.put(counter++, (Event) newLecture);
     }
 
-    public static void createFair(String title, String date, String local, int capacity, String description,
+    public static void createFair(String title, LocalDate date, String local, int capacity, String description,
             boolean isOnline, int numberOfExhibitors) {
-        AcademicFair newFair = new AcademicFair(title, date, local, capacity, description, isOnline, numberOfExhibitors);
+        AcademicFair newFair = new AcademicFair(title, date, local, capacity, description, isOnline,
+                numberOfExhibitors);
         events.put(counter++, (Event) newFair);
     }
 
-    public static void createCourse(String title, String date, String local, int capacity, String description,
+    public static void createCourse(String title, LocalDate date, String local, int capacity, String description,
             boolean isOnline, int durationInHours) {
         Course newCourse = new Course(title, date, local, capacity, description, isOnline, durationInHours);
         events.put(counter++, (Event) newCourse);
     }
 
-    public static void createWorkshop(String title, String date, String local, int capacity, String description,
+    public static void createWorkshop(String title, LocalDate date, String local, int capacity, String description,
             boolean isOnline, String topic) {
         Workshop newWorkshop = new Workshop(title, date, local, capacity, description, isOnline, topic);
         events.put(counter++, (Event) newWorkshop);
@@ -103,13 +110,6 @@ public class EventManager {
         Menu.successfull("REGISTERED SUCCESSFULLY");
     }
 
-    public static void populateEvents() {
-        createLecture("Music Festival 2024", "03/05/2026", "Annual music event.", 1, "oi", true, "Joaozinho");
-        createCourse("Tech Conference Global", "28/02/2025", "Leading tech conference.", 1, "oi", true, 40);
-        createFair("Local Charity Run", "25/08/2027", "5k run for charity.", 1, "oi", false, 4);
-        createWorkshop("Art Exhibition Opening", "02/11/2025", "New modern art pieces.", 1, "oi", false, "carros");
-    }
-
     public static void eventsReportByRegistrationOrder() {
         String optionStr;
         int option;
@@ -124,9 +124,10 @@ public class EventManager {
         if (events.isEmpty()) {
             System.out.println("║ " + ConsoleColors.WARNING + "No events available to list." + ConsoleColors.RESET);
         } else {
-            final int[] displayIndex = {1};
+            final int[] displayIndex = { 1 };
             events.forEach((key, event) -> {
-                System.out.printf("║ " + displayIndex[0]++ + ". " + event.getTitle() + " (" + event.getDate() + ")\n");
+                System.out.printf("║ " + "Event key: " + displayIndex[0]++ + ". " + event.getTitle() + " ("
+                        + event.getDate().format(Utils.displayFormatter) + ")\n");
             });
         }
         System.out.println("║ " + ConsoleColors.WARNING + "Press 0 to return" + ConsoleColors.RESET);
@@ -149,7 +150,7 @@ public class EventManager {
     public static void eventsReportByType() {
         String optionStr;
         int option;
-        
+
         Utils.cleanScreen();
         System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
         System.out.println(
@@ -158,7 +159,7 @@ public class EventManager {
         if (events.isEmpty()) {
             System.out.println("║ " + ConsoleColors.WARNING + "No events available to list." + ConsoleColors.RESET);
         } else {
-            final int[] displayIndex = {1};
+            final int[] displayIndex = { 1 };
 
             System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
             System.out.println("║\t\t\t" + ConsoleColors.INFO + "LECTURE LIST" + ConsoleColors.RESET);
@@ -166,7 +167,8 @@ public class EventManager {
             events.forEach((key, event) -> {
                 if (event instanceof Lecture) {
                     System.out
-                            .println("║ " + displayIndex[0]++ + ". " + event.getTitle() + " (" + event.getDate() + ")");
+                            .println("║ " + displayIndex[0]++ + ". " + event.getTitle() + " ("
+                                    + event.getDate().format(Utils.displayFormatter) + ")");
                 }
             });
 
@@ -218,6 +220,44 @@ public class EventManager {
         }
     }
 
+    public static void eventsReportByDate() {
+        String optionStr;
+        int option;
+
+        Utils.cleanScreen();
+        System.out.println("╔══════════════════════════════════════════════════════════════════════════════");
+        System.out.println(
+                "║\t\t\t" + ConsoleColors.INFO + "CHOOSE AN EVENT TO SEE MORE INFORMATION" + ConsoleColors.RESET);
+        System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
+        System.out.println("║\t" + ConsoleColors.WARNING + "Created at: " + Utils.dateToString(LocalDateTime.now()) + ConsoleColors.RESET);
+        List<Map.Entry<Integer, Event>> eventList = new ArrayList<>(events.entrySet());
+        if (events.isEmpty()) {
+            System.out.println("║ " + ConsoleColors.WARNING + "No events available to list." + ConsoleColors.RESET);
+        } else {
+            eventList.sort(Comparator.comparing(entry -> entry.getValue().getDate()));
+            for (int i = 0; i < eventList.size(); i++) {
+                Map.Entry<Integer, Event> entry = eventList.get(i);
+                System.out.println("║ " + (i + 1) + ". " + entry.getValue().getTitle() + " (" + entry.getValue().getDate().format(Utils.displayFormatter) + ")");
+            }
+        }
+        System.out.println("║ " + ConsoleColors.WARNING + "Press 0 to return" + ConsoleColors.RESET);
+        System.out.println("╚══════════════════════════════════════════════════════════════════════════════");
+        System.out.print(ConsoleColors.INPUT + "Choose an option: " + ConsoleColors.RESET);
+
+        optionStr = scanner.nextLine();
+        option = Utils.isNumber(optionStr);
+
+        if (option == 0) {
+            return;
+        } else if (option == -1) {
+            Menu.error("MUST BE AN INTEGER");
+            return;
+        } else {
+            Map.Entry<Integer, Event> chosenEntry = eventList.get(option - 1);
+            eventDetails(chosenEntry.getKey());
+        }
+    }
+
     public static void eventDetails(int keyEvent) {
         Event eventFound = events.get(keyEvent);
         if (eventFound == null) {
@@ -231,8 +271,9 @@ public class EventManager {
         System.out.println("╠══════════════════════════════════════════════════════════════════════════════");
         System.out.println(
                 "║ " + ConsoleColors.INFO + "Type: " + ConsoleColors.RESET + eventFound.getClass().getSimpleName());
-        System.out.println("║ " + ConsoleColors.INFO + "Date: " + ConsoleColors.RESET + eventFound.getDate());
-        
+        System.out.println("║ " + ConsoleColors.INFO + "Date: " + ConsoleColors.RESET
+                + eventFound.getDate().format(Utils.displayFormatter));
+
         if (eventFound.isOnline()) {
             System.out.println("║ " + ConsoleColors.INFO + "Modality: " + ConsoleColors.RESET + "Online");
             System.out.println("║ " + ConsoleColors.INFO + "Link: " + ConsoleColors.RESET + eventFound.getLocal());
@@ -248,13 +289,17 @@ public class EventManager {
                 "║ " + ConsoleColors.INFO + "Description: " + ConsoleColors.RESET + eventFound.getDescription());
 
         if (eventFound instanceof Course) {
-            System.out.println("║ " + ConsoleColors.INFO + "Duration in hours: " + ConsoleColors.RESET + ((Course) eventFound).getDurationInHours());
-        }else if (eventFound instanceof AcademicFair) {
-            System.out.println("║ " + ConsoleColors.INFO + "Number of exhibitors: " + ConsoleColors.RESET + ((AcademicFair) eventFound).getNumberOfExhibitors());
-        }else if(eventFound instanceof Lecture){
-            System.out.println("║ " + ConsoleColors.INFO + "Speaker: " + ConsoleColors.RESET + ((Lecture) eventFound).getSpeaker());
-        }else if(eventFound instanceof Workshop){
-            System.out.println("║ " + ConsoleColors.INFO + "Topic: " + ConsoleColors.RESET + ((Workshop) eventFound).getTopic());
+            System.out.println("║ " + ConsoleColors.INFO + "Duration in hours: " + ConsoleColors.RESET
+                    + ((Course) eventFound).getDurationInHours());
+        } else if (eventFound instanceof AcademicFair) {
+            System.out.println("║ " + ConsoleColors.INFO + "Number of exhibitors: " + ConsoleColors.RESET
+                    + ((AcademicFair) eventFound).getNumberOfExhibitors());
+        } else if (eventFound instanceof Lecture) {
+            System.out.println("║ " + ConsoleColors.INFO + "Speaker: " + ConsoleColors.RESET
+                    + ((Lecture) eventFound).getSpeaker());
+        } else if (eventFound instanceof Workshop) {
+            System.out.println(
+                    "║ " + ConsoleColors.INFO + "Topic: " + ConsoleColors.RESET + ((Workshop) eventFound).getTopic());
         }
 
         System.out.println("║ " + ConsoleColors.INFO + "Participants List: " + ConsoleColors.RESET);
@@ -311,28 +356,31 @@ public class EventManager {
             if (participant instanceof Student) {
                 Paragraph p = new Paragraph(
                         "The university certifies that " + participant.getName() + ", holder of CPF "
-                        + participant.getCpf()
-                        + ", registration number " + ((Student) participant).getMatricula()
-                        + ", participated in the event " + event.getTitle() + ", held on " + event.getDate() + eventMode
-                        + ".")
+                                + participant.getCpf()
+                                + ", registration number " + ((Student) participant).getMatricula()
+                                + ", participated in the event " + event.getTitle() + ", held on "
+                                + event.getDate().format(Utils.displayFormatter) + eventMode
+                                + ".")
                         .setFontSize(12);
                 document.add(p);
             } else if (participant instanceof Teacher) {
                 Paragraph p = new Paragraph(
                         "The university certifies that " + participant.getName() + ", holder of CPF "
-                        + participant.getCpf()
-                        + ", employee ID " + ((Teacher) participant).getTeacherCode()
-                        + ", participated in the event " + event.getTitle() + ", held on " + event.getDate() + eventMode
-                        + ".")
+                                + participant.getCpf()
+                                + ", employee ID " + ((Teacher) participant).getTeacherCode()
+                                + ", participated in the event " + event.getTitle() + ", held on "
+                                + event.getDate().format(Utils.displayFormatter) + eventMode
+                                + ".")
                         .setFontSize(12);
                 document.add(p);
             } else if (participant instanceof External) {
                 Paragraph p = new Paragraph(
                         "The university certifies that " + participant.getName() + ", holder of CPF "
-                        + participant.getCpf()
-                        + ", external ID " + ((External) participant).getExternalCode()
-                        + ", participated in the event " + event.getTitle() + ", held on " + event.getDate() + eventMode
-                        + ".")
+                                + participant.getCpf()
+                                + ", external ID " + ((External) participant).getExternalCode()
+                                + ", participated in the event " + event.getTitle() + ", held on "
+                                + event.getDate().format(Utils.displayFormatter) + eventMode
+                                + ".")
                         .setFontSize(12);
                 document.add(p);
             }
